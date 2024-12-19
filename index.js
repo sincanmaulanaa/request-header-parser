@@ -30,8 +30,14 @@ app.get('/api/whoami', function (req, res) {
     ipAddress = forwarded.split(',')[0].trim();
     console.log('FORWARDED IP ADDRESS ', ipAddress);
   }
+
+  const language = req.headers['accept-language'];
+  const software = req.headers['user-agent'];
+
   res.json({
     ipaddress: ipAddress,
+    language: language,
+    software: software,
   });
 });
 
