@@ -19,6 +19,22 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.set('trust proxy', true);
+
+app.get('/api/whoami', function (req, res) {
+  let ipAddress = req.ip;
+  console.log('IP ADDRESS ', ipAddress);
+  const forwarded = req.headers['x-forwarded-for'];
+
+  if (forwarded) {
+    ipAddress = forwarded.split(',')[0].trim();
+    console.log('FORWARDED IP ADDRESS ', ipAddress);
+  }
+  res.json({
+    ipaddress: ipAddress,
+  });
+});
+
 // your first API endpoint...
 app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
